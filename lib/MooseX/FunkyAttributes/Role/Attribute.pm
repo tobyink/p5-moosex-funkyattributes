@@ -34,6 +34,12 @@ has custom_clear => (
 	predicate  => 'has_custom_clear',
 );
 
+has custom_weaken => (
+	is         => 'ro',
+	isa        => 'CodeRef',
+	predicate  => 'has_custom_weaken',
+);
+
 has custom_init => (
 	is         => 'ro',
 	isa        => 'CodeRef',
@@ -116,6 +122,12 @@ after _process_options => sub
 	{
 		confess "can't set clearer without custom_clear";
 	}
+
+	if ($options->{weak_ref}
+	and not defined $options->{custom_weaken})
+	{
+		confess "can't set weak_ref without custom_weaken";
+	}
 };
 
 override accessor_metaclass => sub { Accessor };
@@ -146,6 +158,13 @@ override clear_value => sub
 	my ($attr) = @_;
 	local $_ = $_[1];
 	return $attr->custom_clear->(@_);
+};
+
+override _weaken_value => sub
+{
+	my ($attr) = @_;
+	local $_ = $_[1];
+	return $attr->custom_weaken->(@_);
 };
 
 override set_initial_value => sub
@@ -227,7 +246,7 @@ undefined, so settedness is not the same as definedness.)
 
 =back
 
-The following two additional coderefs are optional:
+The following three additional coderefs are optional:
 
 =over
 
@@ -243,6 +262,12 @@ Like C<custom_set> but used during object construction.
 
 If you do not provide this, then the C<custom_set> coderef will be used in its
 place.
+
+=item C<< custom_weaken => CODE ($meta, $instance) >>
+
+The code which weakens an attribute value that is a reference.
+
+If you do not provide this, then your attribute cannot be a weak ref.
 
 =back
 
