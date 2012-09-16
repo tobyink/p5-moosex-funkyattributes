@@ -23,6 +23,10 @@ before _process_options => sub
 		or confess "Required option 'delegated_to' missing";
 	
 	# Meh... we should use Moose's introspection to get the name of accessors, clearers, etc.
+	# ... actually we can't do that. We don't know at attribute creation time, what sort of
+	# object $self->$to will be!!
+	#
+	
 	my $accessor  = exists $options->{delegated_accessor} ? $options->{delegated_accessor} : $name;
 	my $private   = !!($accessor =~ /^_/);
 	my $predicate = exists $options->{delegated_has}   ? $options->{delegated_has}   : ($private ? "_has$accessor"   : "has_$accessor");

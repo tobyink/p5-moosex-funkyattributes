@@ -34,25 +34,25 @@ MooseX::FunkyAttributes - add code smell to your Moose attributes
 
 =head1 SYNOPSIS
 
-	package Circle;
-	
-	use Moose;
-	use MooseX::FunkyAttributes;
-	
-	has radius => (
-		is          => 'rw',
-		isa         => 'Num',
-		predicate   => 'has_radius',
-	);
-	
-	has diameter => (
-		traits      => [ FunkyAttribute ],
-		is          => 'rw',
-		isa         => 'Num',
-		custom_get  => sub { 2 * $_->radius },
-		custom_set  => sub { $_->radius( $_[-1] / 2 ) },
-		custom_has  => sub { $_->has_radius },
-	);
+   package Circle;
+   
+   use Moose;
+   use MooseX::FunkyAttributes;
+   
+   has radius => (
+      is          => 'rw',
+      isa         => 'Num',
+      predicate   => 'has_radius',
+   );
+   
+   has diameter => (
+      traits      => [ FunkyAttribute ],
+      is          => 'rw',
+      isa         => 'Num',
+      custom_get  => sub { 2 * $_->radius },
+      custom_set  => sub { $_->radius( $_[-1] / 2 ) },
+      custom_has  => sub { $_->has_radius },
+   );
 
 =head1 DESCRIPTION
 
@@ -91,26 +91,26 @@ your whole object to be inside-out, then use L<MooseX::InsideOut>.
 This trait delegates the storage of one attribute to another attribute.
 For example:
 
-	package Head;
-	use Moose;
-	has mouth => (
-		is           => 'ro',
-		isa          => 'Mouth',
-	);
-	
-	package Person;
-	use Moose;
-	use MooseX::FunkyAttributes;
-	has head => (
-		is           => 'ro',
-		isa          => 'Head',
-	);
-	has mouth => (
-		is           => 'ro',
-		isa          => 'Mouth::Human',
-		traits       => [ DelegatedAttribute ],
-		delegated_to => 'head',
-	);
+   package Head;
+   use Moose;
+   has mouth => (
+      is           => 'ro',
+      isa          => 'Mouth',
+   );
+   
+   package Person;
+   use Moose;
+   use MooseX::FunkyAttributes;
+   has head => (
+      is           => 'ro',
+      isa          => 'Head',
+   );
+   has mouth => (
+      is           => 'ro',
+      isa          => 'Mouth::Human',
+      traits       => [ DelegatedAttribute ],
+      delegated_to => 'head',
+   );
 
 It is not dissimilar to the Moose's idea of "handles" (in the example above,
 we could have not defined a C<mouth> attribute as part of the C<Person> class,
@@ -160,7 +160,6 @@ This software is copyright (c) 2012 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
 
 =head1 DISCLAIMER OF WARRANTIES
 
