@@ -27,6 +27,7 @@ before _process_options => sub
 	$options->{custom_set}           = sub { $h{ $_[1] } = $_[2] };
 	$options->{custom_has}           = sub { exists $h{ $_[1] } };
 	$options->{custom_clear}         = sub { delete $h{ $_[1] } };
+	$options->{custom_weaken}        = sub { Scalar::Util::weaken( $h{ $_[1] } ) };
 	$options->{custom_inline_get}    = sub { my ($self, $inst) = @_; qq(\$MooseX::FunkyAttributes::Role::Attribute::InsideOut::_HASHES[$hashcount]{$inst};) };
 	$options->{custom_inline_set}    = sub { my ($self, $inst, $val) = @_; qq(\$MooseX::FunkyAttributes::Role::Attribute::InsideOut::_HASHES[$hashcount]{$inst} = $val;) };
 	$options->{custom_inline_weaken} = sub { my ($self, $inst) = @_; qq(Scalar::Util::weaken \$MooseX::FunkyAttributes::Role::Attribute::InsideOut::_HASHES[$hashcount]{$inst};) };
