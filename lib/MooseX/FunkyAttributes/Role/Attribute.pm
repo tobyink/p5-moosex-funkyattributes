@@ -49,16 +49,47 @@ for my $i (@i)
 		isa       => 'CodeRef',
 		predicate => "has_$custom",
 	);
+	next if $i =~ /^(set|weaken)$/;
 	around "_inline_${i}_value" => sub
 	{
 		my ($orig, $self, @args) = @_;
 		if ($self->has_all_inliners) {
-			local $_ = $orig;
 			return $self->$custom->($self, @args);
 		}
 		return $self->$orig(@args);
 	};
 }
+
+around _inline_set_value => sub
+{
+	my ($orig, $self, @args) = @_;
+	my @code = $self->$orig(@args);
+	if ($self->has_all_inliners) {
+		my $replacement = join qq[\n], $self->custom_inline_set->($self, @args);
+		my @new_code;
+		while (@code) {
+			my $line = shift @code;
+			if ($line =~ m{^ \s* \$\S+ \s* = \s* \$\S+ \s* \; \s* $}x)  # poor, very poor :-(
+			{
+				push @new_code, $replacement;
+				next;
+			}
+			push @new_code, $line;
+		}
+		return @new_code;
+	}
+	return @code;
+};
+
+around _inline_weaken_value => sub
+{
+	my ($orig, $self, @args) = @_;
+	return unless $self->is_weak_ref;
+	if ($self->has_all_inliners) {
+		return $self->custom_inline_weaken->($self, @args);
+	}
+	return $self->$orig(@args);
+};
 
 has has_all_inliners => (
 	is         => 'ro',
