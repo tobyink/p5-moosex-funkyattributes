@@ -22,6 +22,7 @@ before _process_options => sub
 	my $to = $options->{delegated_to}
 		or confess "Required option 'delegated_to' missing";
 	
+	# Meh... we should use Moose's introspection to get the name of accessors, clearers, etc.
 	my $accessor  = exists $options->{delegated_accessor} ? $options->{delegated_accessor} : $name;
 	my $private   = !!($accessor =~ /^_/);
 	my $predicate = exists $options->{delegated_has}   ? $options->{delegated_has}   : ($private ? "_has$accessor"   : "has_$accessor");
