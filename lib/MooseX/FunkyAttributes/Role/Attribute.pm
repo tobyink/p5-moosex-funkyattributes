@@ -9,7 +9,7 @@ use Moose::Role;
 
 use aliased 'MooseX::FunkyAttributes::Meta::Accessor';
 use namespace::autoclean;
-	
+
 has custom_get => (
 	is         => 'ro',
 	isa        => 'CodeRef',
@@ -123,30 +123,35 @@ override accessor_metaclass => sub { Accessor };
 override get_raw_value => sub
 {
 	my ($attr) = @_;
+	local $_ = $_[1];
 	return $attr->custom_get->(@_);
 };
 
 override set_raw_value => sub
 {
 	my ($attr) = @_;
+	local $_ = $_[1];
 	return $attr->custom_set->(@_);
 };
 
 override has_value => sub
 {
 	my ($attr) = @_;
+	local $_ = $_[1];
 	return $attr->custom_has->(@_);
 };
 
 override clear_value => sub
 {
 	my ($attr) = @_;
+	local $_ = $_[1];
 	return $attr->custom_clear->(@_);
 };
 
 override set_initial_value => sub
 {
 	my ($attr) = @_;
+	local $_ = $_[1];
 	if ($attr->has_custom_init) {
 		return $attr->custom_init->(@_);
 	}
