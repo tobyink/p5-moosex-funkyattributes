@@ -113,6 +113,11 @@ sub _build_has_all_inliners
 	return 1;
 }
 
+sub accessor_should_be_inlined
+{
+	shift->has_all_inliners;
+}
+
 after _process_options => sub
 {
 	my ($class, $name, $options) = @_;
