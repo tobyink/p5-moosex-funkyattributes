@@ -36,7 +36,8 @@ BEGIN {
 
 #######################################################################
 
-use Test::More tests => 14;
+use Test::More tests => 18;
+use Test::Fatal;
 
 my $circle1 = new_ok 'Local::Circle' => [ radius => 10 ];
 
@@ -59,3 +60,11 @@ is(int $circle2->diameter,       31, '$circle2->diameter');
 is(int $circle2->circumference, 100, '$circle2->circumference');
 is(int $circle2->area,          795, '$circle2->area');
 
+foreach my $attr (qw( radius diameter circumference area ))
+{
+	like(
+		exception { $circle2->$attr("Foo") },
+		qr{Validation failed for 'Num'},
+		qq{Type constraint for $attr still enforced},
+	);
+}
