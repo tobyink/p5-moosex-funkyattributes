@@ -317,6 +317,8 @@ An example for the C<diameter> example in the SYNOPSIS
 
 (Not that weakening a Num makes any sense...)
 
+=back
+
 =head1 BUGS
 
 Please report any bugs to
