@@ -55,10 +55,15 @@ for my $i (@i)
 		isa       => 'CodeRef',
 		predicate => "has_$custom",
 	);
-	next if $i =~ /^(set|weaken)$/;
-	around "_inline_${i}_value" => sub
+	
+	my $guts_method =
+		( $i =~ /^(weaken|clear)$/ )
+			? "_inline_${i}_value"
+			: "_inline_instance_${i}";
+	
+	around $guts_method => sub
 	{
-		my ($orig, $self, @args) = @_;
+		my ($orig, $self, @args) = @_;		
 		if ($self->has_all_inliners) {
 			return $self->$custom->($self, @args);
 		}
@@ -66,35 +71,11 @@ for my $i (@i)
 	};
 }
 
-around _inline_set_value => sub
-{
-	my ($orig, $self, @args) = @_;
-	my @code = $self->$orig(@args);
-	if ($self->has_all_inliners) {
-		my $replacement = join qq[\n], $self->custom_inline_set->($self, @args);
-		my @new_code;
-		while (@code) {
-			my $line = shift @code;
-			if ($line =~ m{^ \s* \$\S+ \s* = \s* \$\S+ \s* \; \s* $}x)  # poor, very poor :-(
-			{
-				push @new_code, $replacement;
-				next;
-			}
-			push @new_code, $line;
-		}
-		return @new_code;
-	}
-	return @code;
-};
-
 around _inline_weaken_value => sub
 {
 	my ($orig, $self, @args) = @_;
 	return unless $self->is_weak_ref;
-	if ($self->has_all_inliners) {
-		return $self->custom_inline_weaken->($self, @args);
-	}
-	return $self->$orig(@args);
+	$self->$orig(@args);
 };
 
 has has_all_inliners => (
@@ -222,6 +203,8 @@ So instead of storing your attribute values in the object's blessed hashref,
 you could calculate them on the fly, or store them in a file or database, or
 an external hashref, or whatever.
 
+=head2 Options
+
 If your attribute uses this trait, then you I<must> provide at least the
 following three coderefs:
 
@@ -276,8 +259,6 @@ If you do not provide this, then your attribute cannot be a weak ref.
 
 =back
 
-=head2 Inlining
-
 Moose attempts to create inlined attribute accessors whenever possible. The
 following coderefs can be defined which must return strings of Perl code
 suitable for inlining the accessors. They are each optional, but unless all
@@ -295,7 +276,7 @@ An example for the C<diameter> example in the SYNOPSIS
 
    custom_inline_set => sub {
       my ($meta, $i, $v) = @_;
-      return sprintf('%s->{radius} = (%s)/2;', $i, $v);
+      return sprintf('%s->{radius} = (%s)/2', $i, $v);
    },
 
 =item C<< custom_inline_get => CODE ($meta, $instance_string) >>
@@ -304,7 +285,7 @@ An example for the C<diameter> example in the SYNOPSIS
 
    custom_inline_get => sub {
       my ($meta, $i) = @_;
-      return sprintf('%s->{radius} * 2;', $i);
+      return sprintf('%s->{radius} * 2', $i);
    },
 
 =item C<< custom_inline_has => CODE ($meta, $instance_string) >>
@@ -313,7 +294,7 @@ An example for the C<diameter> example in the SYNOPSIS
 
    custom_inline_has => sub {
       my ($meta, $i) = @_;
-      return sprintf('exists %s->{radius};', $i);
+      return sprintf('exists %s->{radius}', $i);
    },
 
 =item C<< custom_inline_clear => CODE ($meta, $instance_string) >>
@@ -322,7 +303,7 @@ An example for the C<diameter> example in the SYNOPSIS
 
    custom_inline_has => sub {
       my ($meta, $i) = @_;
-      return sprintf('delete %s->{radius};', $i);
+      return sprintf('delete %s->{radius}', $i);
    },
 
 =item C<< custom_inline_weaken => CODE ($meta, $instance_string) >>
@@ -331,7 +312,7 @@ An example for the C<diameter> example in the SYNOPSIS
 
    custom_inline_has => sub {
       my ($meta, $i) = @_;
-      return sprintf('Scalar::Util::weaken(%s->{radius});', $i);
+      return sprintf('Scalar::Util::weaken(%s->{radius})', $i);
    },
 
 (Not that weakening a Num makes any sense...)
