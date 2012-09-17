@@ -27,20 +27,20 @@ before _process_options => sub
 	# object $self->$to will be!!
 	#
 	
-	my $accessor  = exists $options->{delegated_accessor} ? $options->{delegated_accessor} : $name;
-	my $private   = !!($accessor =~ /^_/);
-	my $predicate = exists $options->{delegated_predicate} ? $options->{delegated_predicate} : ($private ? "_has$accessor"   : "has_$accessor");
-	my $clearer   = exists $options->{delegated_clearer}   ? $options->{delegated_clearer}   : ($private ? "_clear$accessor" : "clear_$accessor");
-	
 	$options->{custom_weaken}        ||= sub { 0   };  # :-(
 	$options->{custom_inline_weaken} ||= sub { q() };  # :-(
 	
+	$options->{delegated_accessor} = (
+		my $accessor  = exists $options->{delegated_accessor} ? $options->{delegated_accessor} : $name
+	);
+	my $private   = !!($accessor =~ /^_/);
+		
 	if ($accessor and not exists $options->{custom_get})
 	{
 		$options->{custom_get} = sub { $_[1]->$to->$accessor };
 		$options->{custom_inline_get} ||= sub {
 			my ($self, $inst, $val) = @_;
-			qq($inst->$to->$accessor())
+			qq( $inst->$to->$accessor() )
 		};
 	}
 	
@@ -49,25 +49,33 @@ before _process_options => sub
 		$options->{custom_set} = sub { $_[1]->$to->$accessor($_[2]) };
 		$options->{custom_inline_set} ||= sub {
 			my ($self, $inst, $val) = @_;
-			qq($inst->$to->$accessor($val))
+			qq( $inst->$to->$accessor($val) )
 		};
 	}
+	
+	$options->{delegated_predicate} = (
+		my $predicate = exists $options->{delegated_predicate} ? $options->{delegated_predicate} : ($private ? "_has$accessor"   : "has_$accessor")
+	);
 	
 	if ($predicate and not exists $options->{custom_has})
 	{
 		$options->{custom_has} = sub { $_[1]->$to->$predicate };
 		$options->{custom_inline_has} ||= sub {
 			my ($self, $inst) = @_;
-			qq($inst->$to->$predicate())
+			qq( $inst->$to->$predicate() )
 		};
 	}
+	
+	$options->{delegated_clearer} = (
+		my $clearer   = exists $options->{delegated_clearer}   ? $options->{delegated_clearer}   : ($private ? "_clear$accessor" : "clear_$accessor")
+	);
 	
 	if ($clearer and not exists $options->{custom_clear})
 	{
 		$options->{custom_clear} = sub { $_[1]->$to->$clearer };
 		$options->{custom_inline_clear} ||= sub {
 			my ($self, $inst) = @_;
-			qq($inst->$to->$clearer())
+			qq( $inst->$to->$clearer() )
 		};
 	}
 	
@@ -205,7 +213,9 @@ you want to define a clearer.
 =back
 
 All the C<custom_blah> and C<custom_inline_blah> options from
-L<MooseX::FunkyAttributes::Role::Attribute> are also available.
+L<MooseX::FunkyAttributes::Role::Attribute> are also available. The
+C<delegated_blah> options above are essentially just shortcuts
+for defining them.
 
 =head1 BUGS
 
@@ -214,7 +224,7 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=MooseX-FunkyAttributes>.
 
 =head1 SEE ALSO
 
-L<MooseX::FunkyAttributes>, L<MooseX::InsideOut>, L<Hash::FieldHash>.
+L<MooseX::FunkyAttributes>.
 
 =head1 AUTHOR
 
