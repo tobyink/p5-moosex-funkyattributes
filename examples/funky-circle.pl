@@ -1,3 +1,5 @@
+use v5.14;
+
 package Circle {
 
 	use Moose;
@@ -68,10 +70,6 @@ package Circle {
 
 	__PACKAGE__->meta->make_immutable;
 }
-
-package main;
-
-use feature 'say';
 
 say "Making a circle with radius=1";
 my $ring = Circle->new(radius => 1);
