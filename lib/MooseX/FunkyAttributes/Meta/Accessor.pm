@@ -6,7 +6,7 @@ use warnings;
 
 BEGIN {
 	$MooseX::FunkyAttributes::Meta::Accessor::AUTHORITY = 'cpan:TOBYINK';
-	$MooseX::FunkyAttributes::Meta::Accessor::VERSION   = '0.001';
+	$MooseX::FunkyAttributes::Meta::Accessor::VERSION   = '0.002';
 }
 
 use Moose;

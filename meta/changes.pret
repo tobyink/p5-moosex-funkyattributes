@@ -4,3 +4,10 @@
 	issued  2012-09-17;
 	label   "Initial release".
 
+`MooseX-FunkyAttributes 0.002 cpan:TOBYINK`
+	issued  2013-02-08;
+	changeset [
+		item "General tiding up."^^Change;
+		item "Include example scripts."^^Addition;
+	].
+

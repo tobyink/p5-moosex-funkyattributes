@@ -6,7 +6,7 @@ use warnings;
 
 BEGIN {
 	$MooseX::FunkyAttributes::AUTHORITY = 'cpan:TOBYINK';
-	$MooseX::FunkyAttributes::VERSION   = '0.001';
+	$MooseX::FunkyAttributes::VERSION   = '0.002';
 }
 
 use aliased qw(

@@ -6,7 +6,7 @@ use warnings;
 
 BEGIN {
 	$MooseX::FunkyAttributes::Role::Attribute::InsideOut::AUTHORITY = 'cpan:TOBYINK';
-	$MooseX::FunkyAttributes::Role::Attribute::InsideOut::VERSION   = '0.001';
+	$MooseX::FunkyAttributes::Role::Attribute::InsideOut::VERSION   = '0.002';
 }
 
 use Hash::FieldHash ();
