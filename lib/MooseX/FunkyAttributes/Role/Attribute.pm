@@ -1,5 +1,9 @@
 package MooseX::FunkyAttributes::Role::Attribute;
 
+use 5.008;
+use strict;
+use warnings;
+
 BEGIN {
 	$MooseX::FunkyAttributes::Role::Attribute::AUTHORITY = 'cpan:TOBYINK';
 	$MooseX::FunkyAttributes::Role::Attribute::VERSION   = '0.001';

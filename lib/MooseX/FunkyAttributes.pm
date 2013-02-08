@@ -1,11 +1,13 @@
 package MooseX::FunkyAttributes;
 
+use 5.008;
+use strict;
+use warnings;
+
 BEGIN {
 	$MooseX::FunkyAttributes::AUTHORITY = 'cpan:TOBYINK';
 	$MooseX::FunkyAttributes::VERSION   = '0.001';
 }
-
-use 5.008;
 
 use aliased qw(
 	MooseX::FunkyAttributes::Role::Attribute
