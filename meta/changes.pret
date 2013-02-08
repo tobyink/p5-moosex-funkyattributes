@@ -10,5 +10,6 @@
 		item "General tiding up."^^Change;
 		item "Include example scripts."^^Addition;
 		item "Show MooseX::CustomInitArgs in example, and include in SEE ALSO."^^Addition;
+		item "Document the test suite."^^Documentation;
 	].
 
