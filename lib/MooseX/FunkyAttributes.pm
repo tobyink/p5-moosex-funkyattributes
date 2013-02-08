@@ -153,9 +153,15 @@ L<MooseX::FunkyAttributes::Role::Attribute>,
 L<MooseX::FunkyAttributes::Role::Attribute::InsideOut>,
 L<MooseX::FunkyAttributes::Role::Attribute::Delegated>.
 
+These effect storage for whole object instances; not just one attribute:
 L<MooseX::GlobRef>,
 L<MooseX::InsideOut>,
 L<MooseX::ArrayRef>.
+
+L<MooseX::CustomInitArgs> - if you have (as in the SYNOPSIS) one attribute
+which is calculated from another (diameter from radius), MooseX::CustomInitArgs
+will allow you to accept both attributes in the constructor (i.e. accept a
+diameter in the constructor, halve it, and set the radius attribute).
 
 =head1 AUTHOR
 
