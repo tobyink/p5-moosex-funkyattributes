@@ -221,6 +221,22 @@ L<MooseX::FunkyAttributes::Role::Attribute> are also available. The
 C<delegated_blah> options above are essentially just shortcuts
 for defining them.
 
+Your attribute metaobject has the following methods (in addition to the
+standard L<MooseX::FunkyAttributes::Role::Attribute> and
+L<Moose::Meta::Attribute> stuff):
+
+=over
+
+=item C<delegated_to>
+
+=item C<delegated_accessor>
+
+=item C<delegated_clearer>
+
+=item C<delegated_predicate>
+
+=back
+
 =head1 BUGS
 
 Please report any bugs to

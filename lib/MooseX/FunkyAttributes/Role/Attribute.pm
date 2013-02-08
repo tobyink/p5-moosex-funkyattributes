@@ -67,7 +67,7 @@ for my $i (@i)
 	
 	around $guts_method => sub
 	{
-		my ($orig, $self, @args) = @_;		
+		my ($orig, $self, @args) = @_;
 		if ($self->has_all_inliners) {
 			return $self->$custom->($self, @args);
 		}
@@ -320,6 +320,39 @@ An example for the C<diameter> example in the SYNOPSIS
    },
 
 (Not that weakening a Num makes any sense...)
+
+=back
+
+Your attribute metaobject has the following methods (in addition to the
+standard L<Moose::Meta::Attribute> stuff):
+
+=over
+
+=item C<custom_get>
+
+=item C<custom_set>
+
+=item C<custom_has>
+
+=item C<custom_clear>, C<has_custom_clear>
+
+=item C<custom_weaken>, C<has_custom_weaken>
+
+=item C<custom_init>, C<has_custom_init>
+
+=item C<custom_inline_get>, C<has_custom_inline_get>
+
+=item C<custom_inline_set>, C<has_custom_inline_set>
+
+=item C<custom_inline_has>, C<has_custom_inline_has>
+
+=item C<custom_inline_clear>, C<has_custom_inline_clear>
+
+=item C<custom_inline_weaken>, C<has_custom_inline_weaken>
+
+=item C<accessor_should_be_inlined>
+
+=item C<has_all_inliners>
 
 =back
 
