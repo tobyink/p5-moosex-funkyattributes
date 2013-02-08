@@ -11,5 +11,6 @@
 		item "Include example scripts."^^Documentation;
 		item "Show MooseX::CustomInitArgs in example, and include in SEE ALSO."^^Documentation;
 		item "Document the test suite."^^Documentation;
+		item "Document the metaobject interface (albeit briefly)."^^Documentation;
 	].
 

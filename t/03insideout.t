@@ -29,7 +29,7 @@ BEGIN {
 	no thanks;
 	use Moose;
 	use MooseX::FunkyAttributes;
-	use constant PI => 3.14159; 
+	use constant PI => 3.14159;
 	has radius => (
 		traits     => [ InsideOutAttribute ],
 		is         => 'rw',

@@ -83,7 +83,7 @@ package Circle {
 			$self->diameter,
 			$self->circumference,
 			$self->area,
-		);	
+		);
 	}
 
 	__PACKAGE__->meta->make_immutable;
