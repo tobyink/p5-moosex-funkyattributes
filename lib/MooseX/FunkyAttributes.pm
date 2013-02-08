@@ -56,11 +56,6 @@ MooseX::FunkyAttributes - add code smell to your Moose attributes
       custom_has  => sub { $_->has_radius },
    );
 
-=head1 STATUS
-
-At the moment this is primarily an experiment. It's probably not wise to
-deploy it in live projects.
-
 =head1 DESCRIPTION
 
 The MooseX::FunkyAttributes module itself just provides some convenience
