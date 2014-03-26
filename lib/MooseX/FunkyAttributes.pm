@@ -9,7 +9,7 @@ BEGIN {
 	$MooseX::FunkyAttributes::VERSION   = '0.002';
 }
 
-use Exporter::Shiny qw(
+use Exporter::Shiny our(@EXPORT) = qw(
 	FunkyAttribute
 	InsideOutAttribute
 	DelegatedAttribute
