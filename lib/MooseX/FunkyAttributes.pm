@@ -9,6 +9,12 @@ BEGIN {
 	$MooseX::FunkyAttributes::VERSION   = '0.002';
 }
 
+use Exporter::Shiny qw(
+	FunkyAttribute
+	InsideOutAttribute
+	DelegatedAttribute
+);
+
 use aliased qw(
 	MooseX::FunkyAttributes::Role::Attribute
 	FunkyAttribute
@@ -23,8 +29,6 @@ use aliased qw(
 	MooseX::FunkyAttributes::Role::Attribute::Delegated
 	DelegatedAttribute
 );
-
-use Exporter::Everything;
 
 1;
 

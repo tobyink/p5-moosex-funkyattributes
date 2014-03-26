@@ -5,7 +5,7 @@
 	version_from      m`MooseX::FunkyAttributes`;
 	readme_from       m`MooseX::FunkyAttributes`;
 	requires          p`aliased 0`;
-	requires          p`Exporter::Everything 0.001`;
+	requires          p`Exporter::Shiny`;
 	requires          p`Hash::FieldHash 0`;
 	requires          p`Moose 2.00`;
 	requires          p`namespace::autoclean 0`;
