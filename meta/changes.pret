@@ -20,5 +20,6 @@
 		item "Fix constructors in immutable classes."^^Bugfix;
 		item "Just generally improve inlining logic."^^Change;
 		item "Switch from Exporter::Everything to Exporter::Shiny."^^Update;
+		item "use Dist::Inkt"^^Packaging;
 	].
 

@@ -1,17 +1,14 @@
 # This file provides instructions for packaging.
 
 `MooseX-FunkyAttributes`
-	perl_version_from m`MooseX::FunkyAttributes`;
-	version_from      m`MooseX::FunkyAttributes`;
-	readme_from       m`MooseX::FunkyAttributes`;
-	requires          p`aliased`;
-	requires          p`Exporter::Shiny`;
-	requires          p`Hash::FieldHash`;
-	requires          p`Moose 2.00`;
-	requires          p`namespace::autoclean`;
-	test_requires     p`Test::More 0.96`;
-	test_requires     p`Test::Fatal`;
-	test_requires     p`Test::Moose`;
-	test_requires     p`thanks 0.001`;
+	deps:runtime-requirement   [ deps:on "aliased"^^deps:CpanId ];
+	deps:runtime-requirement   [ deps:on "Exporter::Shiny"^^deps:CpanId ];
+	deps:runtime-requirement   [ deps:on "Hash::FieldHash"^^deps:CpanId ];
+	deps:runtime-requirement   [ deps:on "Moose 2.00"^^deps:CpanId ];
+	deps:runtime-requirement   [ deps:on "namespace::autoclean"^^deps:CpanId ];
+	deps:test-requirement      [ deps:on "Test::More 0.96"^^deps:CpanId ];
+	deps:test-requirement      [ deps:on "Test::Fatal"^^deps:CpanId ];
+	deps:test-requirement      [ deps:on "Test::Moose"^^deps:CpanId ];
+	deps:test-requirement      [ deps:on "thanks 0.001"^^deps:CpanId ];
 .
 
