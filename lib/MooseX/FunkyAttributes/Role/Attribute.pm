@@ -53,11 +53,13 @@ has custom_init => (
 my @i = qw( set get weaken has clear );
 for my $i (@i)
 {
-	my $custom = "custom_inline_$i";
+	my $non_inline = "custom_$i";
+	my $custom     = "custom_inline_$i";
+	my $has_custom = "has_$custom";
 	has $custom => (
 		is        => 'ro',
 		isa       => 'CodeRef',
-		predicate => "has_$custom",
+		predicate => $has_custom,
 	);
 	
 	my $guts_method =
@@ -67,11 +69,20 @@ for my $i (@i)
 	
 	around $guts_method => sub
 	{
-		my ($orig, $self, @args) = @_;
-		if ($self->has_all_inliners) {
-			return $self->$custom->($self, @args);
-		}
-		return $self->$orig(@args);
+		my $next = shift;
+		my $self = shift;
+		my ($instance_var, $param_var) = @_;
+		
+		return $self->$custom->($self, @_) if $self->$has_custom;
+		
+		return sprintf(
+			'do { my $attr = Moose::Util::find_meta(ref(%s))->get_attribute(%s); local $_ = %s; $attr->%s->($attr'.join('',map(',%s',@_)).') }',
+			$instance_var,
+			B::perlstring($self->name),
+			$instance_var,
+			$non_inline,
+			@_,
+		);
 	};
 }
 

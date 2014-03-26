@@ -55,6 +55,9 @@ BEGIN {
 		custom_get => sub { PI * ( $_[1]->radius ** 2 ) },
 		custom_has => sub { 1 },
 	);
+	
+#	require Test::More;
+#	Test::More::note( join "\n", __PACKAGE__->meta->_inline_new_object );
 }
 
 #######################################################################
