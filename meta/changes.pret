@@ -14,3 +14,11 @@
 		item "Document the metaobject interface (albeit briefly)."^^Documentation;
 	].
 
+`MooseX-FunkyAttributes 0.003 cpan:TOBYINK`
+	issued  2014-03-26;
+	changeset [
+		item "Fix constructors in immutable classes."^^Bugfix;
+		item "Just generally improve inlining logic."^^Change;
+		item "Switch from Exporter::Everything to Exporter::Shiny."^^Update;
+	].
+
