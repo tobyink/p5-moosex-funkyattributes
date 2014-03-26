@@ -1,3 +1,7 @@
+=pod
+
+=encoding utf-8
+
 =head1 PURPOSE
 
 Check the C<DelegatedAttribute> trait works using a C<House> class which
